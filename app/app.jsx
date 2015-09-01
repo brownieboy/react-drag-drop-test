@@ -1,53 +1,54 @@
 'use strict';
 import $ from 'jquery';
 import 'jquery-ui/sortable';
-
+import 'jquery-ui-touch-punch';
+import shortid from "shortid";
 import React from 'react';
-// import { Router, Route, Link } from 'react-router';
-import IndexComponent from './components/ComponentsList.jsx';
+import ListOfComponents from './components/ListOfComponents.jsx';
 
-// var sourceListComponent = <IndexComponent items={[1,2,3]}
-// 	title="Source list" id="sourceList" sectionClassName="listSection"/>;
-// var targetListComponent = <IndexComponent items={[4,5,6]} title="Target list"
-// 	id="targetList" connectWithComponentId="sourceList"
-// 	connectWithClass="connected-list" sectionClassName="listSection" />;
-
-
-export default class MainApp extends React.Component {
+class MainApp extends React.Component {
     constructor(props) {
-        super(props);
+    	super(props);
+    	// In ES6 class syntax, React no longer automagically binds your
+    	// methods to the component object, so DIY (if they're likely to
+    	// used as callbacks only?)
+		var tempItems = props.sourceItems.map((item, index) => {
+			return {title: item, key: shortid.generate()};
+		});
+		this.state = {sourceItems: tempItems};
+    	this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
+      this.onSourceListItemDragStop = this.onSourceListItemDragStop.bind(this);
     }
-
 	render() {
-		return ( <div>
-			<IndexComponent items={this.props.sourceItems}
-				title="Source list" id="sourceList"
-				sectionClassName="listSection"
-				connectWithComponentId="sourceList"
-				onItemDragStop={this.onSourceListItemDragStop} />
-			<IndexComponent items={this.props.targetItems} title="Target list"
-				connectWithClass="connected-list" sectionClassName="listSection"
-				id="targetList" /></div> );
+		return (
+			<div>
+				<ListOfComponents items={this.state.sourceItems}
+					title="Source list" id="sourceList"
+					sectionClassName="listSection"
+					sortable={true}
+					onItemDragStop={this.onSourceListItemDragStop}
+					onItemDragStart={this.onSourceListItemDragStart} />
+			 </div>
+		)
 	}
-
-	onSourceListItemDragStop(sortableContextObject,event, ui) {
-      var newText = ui.item[0].textContent;
-      var targetListId = ui.item.parent().attr("id");
-      console.log("tempText = " + newText);
-      console.log("targetListId = " + targetListId);
-      $(sortableContextObject).sortable("cancel");
+	onSourceListItemDragStart (sortableContextObject, event, ui) {
+      this.dragStartIndex = ui.item.index();
 	}
-
-	onTargetListItemDragStop(sortableContextObject, event, ui) {
-      var newText = ui.item[0].textContent;
-      var targetListId = ui.item.parent().attr("id");
-      console.log("tempText = " + newText);
-      console.log("targetListId = " + targetListId);
+	onSourceListItemDragStop (sortableContextObject, event, ui) {
+		var oldIndex = this.dragStartIndex;
+		var newIndex = ui.item.index();
+		$(sortableContextObject).sortable("cancel");
+		this.reorderFromIndices(oldIndex, newIndex);
 	}
+	reorderFromIndices(oldIndex, newIndex) {
+    	var newStateSourceItems = this.state.sourceItems.slice();
+    	newStateSourceItems.splice(newIndex, 0, newStateSourceItems.splice(oldIndex, 1) [0]);
+    	this.setState({sourceItems: newStateSourceItems});
+    	console.log("order is " + JSON.stringify(this.state.sourceItems));
+ 	}
 }
 
-MainApp.defaultProps = {sourceItems: [1,2,3], targetItems: [4,5,6]};
-
+MainApp.defaultProps = {sourceItems: [1,2,3]};
 
 
 React.render(<MainApp />, document.body);
