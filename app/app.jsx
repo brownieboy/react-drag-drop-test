@@ -16,9 +16,9 @@ class MainApp extends React.Component {
 			return {title: item, key: shortid.generate()};
 		});
 		this.state = {sourceItems: tempItems};
-    	this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
-      this.onSourceListItemDragStop = this.onSourceListItemDragStop.bind(this);
-    }
+    this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
+    this.onSourceListItemDragStop = this.onSourceListItemDragStop.bind(this);
+  }
 	render() {
 		return (
 			<div>
@@ -35,6 +35,14 @@ class MainApp extends React.Component {
       this.dragStartIndex = ui.item.index();
 	}
 	onSourceListItemDragStop (sortableContextObject, event, ui) {
+    var tempId = ui.item.attr("id");
+    var targetListId = ui.item.parent().attr("id");
+    var sourceDataId = ui.item.attr("data-itemid");
+    if(targetListId === "productsPickedList") {
+        $(this).sortable('cancel');
+        $.Topic( "newProdDraggedToTarget").publish(sourceDataId);
+    }
+
 		var oldIndex = this.dragStartIndex;
 		var newIndex = ui.item.index();
 		$(sortableContextObject).sortable("cancel");
@@ -48,7 +56,7 @@ class MainApp extends React.Component {
  	}
 }
 
-MainApp.defaultProps = {sourceItems: [1,2,3]};
+MainApp.defaultProps = {sourceItems: [1,2,3], targetItems: [4,5,6]};
 
 
 React.render(<MainApp />, document.body);
