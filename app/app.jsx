@@ -81,7 +81,7 @@ class MainApp extends React.Component {
   }
 }
 
-MainApp.defaultProps = {sourceItems: [1,2,3], targetItems: [4,5,6]};
+MainApp.defaultProps = {sourceItems: ["bananas", "apples", "oranges"], targetItems: ["pears"]};
 
 
 React.render(<MainApp />, document.body);

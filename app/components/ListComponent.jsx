@@ -5,6 +5,6 @@ export default class ListComponent extends React.Component {
     	super(props);
   	}
 	render() {
-      return (<li>item {this.props.title}</li>);
+      return (<li>{this.props.title}</li>);
 	}
 }
