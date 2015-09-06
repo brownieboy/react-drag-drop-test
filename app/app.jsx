@@ -20,6 +20,8 @@ class MainApp extends React.Component {
     });
 		this.state = {sourceItems: tempSourceItems, targetItems: tempTargetItems};
     this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
+    this.onTargetListItemDragStart = this.onTargetListItemDragStart.bind(this);
+
     this.onSourceListItemDragStop = this.onSourceListItemDragStop.bind(this);
   }
 	render() {
@@ -37,22 +39,29 @@ class MainApp extends React.Component {
           sectionClassName="listSection"
           connectWithClass="connected-list"
           onItemDragStop={this.onSourceListItemDragStop}
-          onItemDragStart={this.onSourceListItemDragStart} />
+          onItemDragStart={this.onTargetListItemDragStart} />
        </div>
 
 		)
 	}
 	onSourceListItemDragStart (sortableContextObject, event, ui) {
-      this.dragStartIndex = ui.item.index();
+      this.dragStart = {"origin":"source",
+                        "index": ui.item.index()};
 	}
+  onTargetListItemDragStart (sortableContextObject, event, ui) {
+      this.dragStart = {"origin":"target",
+                        "index": ui.item.index()};
+  }
 	onSourceListItemDragStop (sortableContextObject, event, ui) {
     var tempId = ui.item.attr("id");
     var targetListId = ui.item.parent().attr("id");
-    var oldIndex = this.dragStartIndex;
+    var oldIndex = this.dragStart.index;
     var newIndex = ui.item.index();
     $(sortableContextObject).sortable("cancel");
     if(targetListId === "targetList") {
-      this.reorderFromIndices(oldIndex, newIndex);
+      if (this.dragStart.origin === "target") {
+        this.reorderFromIndices(oldIndex, newIndex);
+      }
     }
 	}
 	reorderFromIndices(oldIndex, newIndex) {
