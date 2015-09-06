@@ -12,10 +12,13 @@ class MainApp extends React.Component {
     	// In ES6 class syntax, React no longer automagically binds your
     	// methods to the component object, so DIY (if they're likely to
     	// used as callbacks only?)
-		var tempItems = props.sourceItems.map((item, index) => {
+		var tempSourceItems = props.sourceItems.map((item, index) => {
 			return {title: item, key: shortid.generate()};
 		});
-		this.state = {sourceItems: tempItems};
+    var tempTargetItems = props.targetItems.map((item, index) => {
+      return {title: item, key: shortid.generate()};
+    });
+		this.state = {sourceItems: tempSourceItems, targetItems: tempTargetItems};
     this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
     this.onSourceListItemDragStop = this.onSourceListItemDragStop.bind(this);
   }
@@ -28,7 +31,14 @@ class MainApp extends React.Component {
 					sortable={true}
 					onItemDragStop={this.onSourceListItemDragStop}
 					onItemDragStart={this.onSourceListItemDragStart} />
-			 </div>
+        <ListOfComponents items={this.state.targetItems}
+          title="Target list" id="targetList"
+          sectionClassName="listSection"
+          sortable={true}
+          onItemDragStop={this.onSourceListItemDragStop}
+          onItemDragStart={this.onSourceListItemDragStart} />
+       </div>
+
 		)
 	}
 	onSourceListItemDragStart (sortableContextObject, event, ui) {

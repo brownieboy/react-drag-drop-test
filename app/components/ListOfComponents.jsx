@@ -37,7 +37,7 @@ export default class ComponentsList extends React.Component {
         connectWith: "." + that.props.connectWithClass,
         over: function() {
           console.log("over called");
-          $('.placeholder').hide();
+      //    $('.placeholder').hide();
         },
         helper: "clone",
         start: function(event, ui) {

@@ -20,3 +20,11 @@
 	margin-bottom: 15px;
 }
 
+.listSection {
+	display: inline-block;
+	margin-left: 30px;
+}
+
+/*#sourceList .ui-sortable-placeholder {
+	visibility: hidden;
+}*/
