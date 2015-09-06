@@ -49,16 +49,12 @@ class MainApp extends React.Component {
 	onSourceListItemDragStop (sortableContextObject, event, ui) {
     var tempId = ui.item.attr("id");
     var targetListId = ui.item.parent().attr("id");
-    var sourceDataId = ui.item.attr("data-itemid");
-    if(targetListId === "productsPickedList") {
-        $(this).sortable('cancel');
-        $.Topic( "newProdDraggedToTarget").publish(sourceDataId);
+    var oldIndex = this.dragStartIndex;
+    var newIndex = ui.item.index();
+    $(sortableContextObject).sortable("cancel");
+    if(targetListId === "targetList") {
+      this.reorderFromIndices(oldIndex, newIndex);
     }
-
-		var oldIndex = this.dragStartIndex;
-		var newIndex = ui.item.index();
-		$(sortableContextObject).sortable("cancel");
-		this.reorderFromIndices(oldIndex, newIndex);
 	}
 	reorderFromIndices(oldIndex, newIndex) {
     	var newStateSourceItems = this.state.sourceItems.slice();
