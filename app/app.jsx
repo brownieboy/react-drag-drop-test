@@ -21,7 +21,6 @@ class MainApp extends React.Component {
 		this.state = {sourceItems: tempSourceItems, targetItems: tempTargetItems};
     this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
     this.onTargetListItemDragStart = this.onTargetListItemDragStart.bind(this);
-
     this.onSourceListItemDragStop = this.onSourceListItemDragStop.bind(this);
   }
 	render() {
@@ -59,7 +58,10 @@ class MainApp extends React.Component {
     var newIndex = ui.item.index();
     $(sortableContextObject).sortable("cancel");
     if(targetListId === "targetList") {
-      if (this.dragStart.origin === "target") {
+      if (this.dragStart.origin === "source") {
+        this.addItem("temp", newIndex);
+      }
+      else {
         this.reorderFromIndices(oldIndex, newIndex);
       }
     }
@@ -70,6 +72,12 @@ class MainApp extends React.Component {
     	this.setState({targetItems: newStateTargetItems});
     	console.log("order is " + JSON.stringify(this.state.sourceItems));
  	}
+  addItem(item, newIndex) {
+    var newItem = {title: item, key: shortid.generate()};
+    var newStateTargetItems = this.state.targetItems.slice();
+    newStateTargetItems.push(newItem);
+    this.setState({targetItems: newStateTargetItems});
+  }
 }
 
 MainApp.defaultProps = {sourceItems: [1,2,3], targetItems: [4,5,6]};
