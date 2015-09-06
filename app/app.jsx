@@ -54,12 +54,13 @@ class MainApp extends React.Component {
 	onSourceListItemDragStop (sortableContextObject, event, ui) {
     var tempId = ui.item.attr("id");
     var targetListId = ui.item.parent().attr("id");
+    var newText = ui.item[0].textContent;
     var oldIndex = this.dragStart.index;
     var newIndex = ui.item.index();
     $(sortableContextObject).sortable("cancel");
     if(targetListId === "targetList") {
       if (this.dragStart.origin === "source") {
-        this.addItem("temp", newIndex);
+        this.addItem(newText, newIndex);
       }
       else {
         this.reorderFromIndices(oldIndex, newIndex);
@@ -72,8 +73,8 @@ class MainApp extends React.Component {
     	this.setState({targetItems: newStateTargetItems});
     	console.log("order is " + JSON.stringify(this.state.sourceItems));
  	}
-  addItem(item, newIndex) {
-    var newItem = {title: item, key: shortid.generate()};
+  addItem(newTitle, newIndex) {
+    var newItem = {title: newTitle, key: shortid.generate()};
     var newStateTargetItems = this.state.targetItems.slice();
     newStateTargetItems.push(newItem);
     this.setState({targetItems: newStateTargetItems});
