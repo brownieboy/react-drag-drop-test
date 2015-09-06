@@ -41,6 +41,8 @@ export default class ComponentsList extends React.Component {
         },
         helper: "clone",
         start: function(event, ui) {
+          $(ui.item).show();
+
           that.props.onItemDragStart(this, event, ui);
         },
         stop: function(event, ui) {

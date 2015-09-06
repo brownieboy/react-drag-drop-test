@@ -25,6 +25,6 @@
 	margin-left: 30px;
 }
 
-/*#sourceList .ui-sortable-placeholder {
-	visibility: hidden;
-}*/
+#sourceList .ui-sortable-placeholder {
+	display: none;
+}

@@ -29,12 +29,14 @@ class MainApp extends React.Component {
 					title="Source list" id="sourceList"
 					sectionClassName="listSection"
 					sortable={true}
+          connectWithClass="connected-list"
 					onItemDragStop={this.onSourceListItemDragStop}
 					onItemDragStart={this.onSourceListItemDragStart} />
         <ListOfComponents items={this.state.targetItems}
           title="Target list" id="targetList"
           sectionClassName="listSection"
           sortable={true}
+          connectWithClass="connected-list"
           onItemDragStop={this.onSourceListItemDragStop}
           onItemDragStart={this.onSourceListItemDragStart} />
        </div>
