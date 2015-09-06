@@ -60,7 +60,7 @@ class MainApp extends React.Component {
     $(sortableContextObject).sortable("cancel");
     if(targetListId === "targetList") {
       if (this.dragStart.origin === "source") {
-        this.addItem(newText, newIndex);
+        this.insertItem(newText, newIndex);
       }
       else {
         this.reorderFromIndices(oldIndex, newIndex);
@@ -73,10 +73,11 @@ class MainApp extends React.Component {
     	this.setState({targetItems: newStateTargetItems});
     	console.log("order is " + JSON.stringify(this.state.sourceItems));
  	}
-  addItem(newTitle, newIndex) {
+  insertItem(newTitle, newIndex) {
     var newItem = {title: newTitle, key: shortid.generate()};
     var newStateTargetItems = this.state.targetItems.slice();
-    newStateTargetItems.push(newItem);
+    newStateTargetItems.splice(newIndex, 0, newItem);
+
     this.setState({targetItems: newStateTargetItems});
   }
 }
