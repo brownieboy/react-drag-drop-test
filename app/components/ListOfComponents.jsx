@@ -30,7 +30,6 @@ export default class ComponentsList extends React.Component {
   }
 
   makeSortable(thisDOMNode) {
-    if(this.props.sortable) {
       var that = this;
       var connectionString = "#" + this.props.id;
       $(connectionString).sortable({
@@ -41,7 +40,9 @@ export default class ComponentsList extends React.Component {
         },
         helper: "clone",
         start: function(event, ui) {
-          $(ui.item).show();
+          if (!that.props.sortable) {
+            $(ui.item).show();  // Item that you're dragging stays in place too
+          }
 
           that.props.onItemDragStart(this, event, ui);
         },
@@ -49,7 +50,6 @@ export default class ComponentsList extends React.Component {
           that.props.onItemDragStop(this, event, ui);
         }
       });
-    }
   }
 
   getId() {
@@ -58,5 +58,6 @@ export default class ComponentsList extends React.Component {
 }
 
 ComponentsList.defaultProps = {
-  items: []
+  items: [],
+  sortable: true
 };

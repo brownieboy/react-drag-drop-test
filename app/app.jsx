@@ -28,14 +28,13 @@ class MainApp extends React.Component {
 				<ListOfComponents items={this.state.sourceItems}
 					title="Source list" id="sourceList"
 					sectionClassName="listSection"
-					sortable={true}
           connectWithClass="connected-list"
 					onItemDragStop={this.onSourceListItemDragStop}
-					onItemDragStart={this.onSourceListItemDragStart} />
+					onItemDragStart={this.onSourceListItemDragStart}
+          sortable={false} />
         <ListOfComponents items={this.state.targetItems}
           title="Target list" id="targetList"
           sectionClassName="listSection"
-          sortable={true}
           connectWithClass="connected-list"
           onItemDragStop={this.onSourceListItemDragStop}
           onItemDragStart={this.onSourceListItemDragStart} />
@@ -57,9 +56,9 @@ class MainApp extends React.Component {
     }
 	}
 	reorderFromIndices(oldIndex, newIndex) {
-    	var newStateSourceItems = this.state.sourceItems.slice();
-    	newStateSourceItems.splice(newIndex, 0, newStateSourceItems.splice(oldIndex, 1) [0]);
-    	this.setState({sourceItems: newStateSourceItems});
+    	var newStateTargetItems = this.state.targetItems.slice();
+    	newStateTargetItems.splice(newIndex, 0, newStateTargetItems.splice(oldIndex, 1) [0]);
+    	this.setState({targetItems: newStateTargetItems});
     	console.log("order is " + JSON.stringify(this.state.sourceItems));
  	}
 }
