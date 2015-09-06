@@ -21,7 +21,7 @@ class MainApp extends React.Component {
 		this.state = {sourceItems: tempSourceItems, targetItems: tempTargetItems};
     this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
     this.onTargetListItemDragStart = this.onTargetListItemDragStart.bind(this);
-    this.onSourceListItemDragStop = this.onSourceListItemDragStop.bind(this);
+    this.onListItemDragStop = this.onListItemDragStop.bind(this);
   }
 	render() {
 		return (
@@ -30,14 +30,14 @@ class MainApp extends React.Component {
 					title="Source list" id="sourceList"
 					sectionClassName="listSection"
           connectWithClass="connected-list"
-					onItemDragStop={this.onSourceListItemDragStop}
+					onItemDragStop={this.onListItemDragStop}
 					onItemDragStart={this.onSourceListItemDragStart}
           sortable={false} />
         <ListOfComponents items={this.state.targetItems}
           title="Target list" id="targetList"
           sectionClassName="listSection"
           connectWithClass="connected-list"
-          onItemDragStop={this.onSourceListItemDragStop}
+          onItemDragStop={this.onListItemDragStop}
           onItemDragStart={this.onTargetListItemDragStart} />
        </div>
 
@@ -51,8 +51,7 @@ class MainApp extends React.Component {
       this.dragStart = {"origin":"target",
                         "index": ui.item.index()};
   }
-	onSourceListItemDragStop (sortableContextObject, event, ui) {
-    var tempId = ui.item.attr("id");
+	onListItemDragStop (sortableContextObject, event, ui) {
     var targetListId = ui.item.parent().attr("id");
     var newText = ui.item[0].textContent;
     var oldIndex = this.dragStart.index;
