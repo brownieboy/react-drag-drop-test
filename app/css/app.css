@@ -13,6 +13,10 @@
 	margin-bottom: 15px;
 }
 
+.hover .emptyTarget {
+	border: 1px dashed blue;
+}
+
 .index-list {
 	display: inline-block;
 	border: 1px blue solid;

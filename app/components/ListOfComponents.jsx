@@ -43,8 +43,8 @@ export default class ComponentsList extends React.Component {
       $(connectionString).sortable({
         connectWith: "." + that.props.connectWithClass,
         over: function() {
+          $("#" + that.props.id).addClass("hover");
           console.log("over called");
-      //    $('.placeholder').hide();
         },
         helper: "clone",
         start: function(event, ui) {
