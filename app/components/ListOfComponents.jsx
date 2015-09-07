@@ -6,20 +6,28 @@ import ListComponent from './ListComponent.jsx';
 
 export default class ComponentsList extends React.Component {
   render() {
-    if (this.props.items.length === 0) {
-      return (
-        <p ref="empty">Index is empty.</p>
+    var ulList;
+    if (this.props.items.length > 0) {
+      ulList = (
+        <ul id={this.props.id} className="connected-list index-list">
+          {this.props.items.map(function(item, index) {
+            return(<ListComponent key={item.key} title={item.title} />);
+          })}
+        </ul>
+      );
+    }
+    else {
+      ulList = (
+        <ul id={this.props.id} className="connected-list index-list static">
+          <div className="emptyTarget">Drag items here</div>
+        </ul>
       );
     }
 
     return (
       <section className={this.props.sectionClassName}>
         <h2>{this.props.title}</h2>
-        <ul id={this.props.id} className="connected-list index-list">
-          {this.props.items.map(function(item, index) {
-              return(<ListComponent key={item.key} title={item.title} />);
-          })}
-        </ul>
+        {ulList}
       </section>
     )
   }

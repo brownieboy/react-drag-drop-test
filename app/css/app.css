@@ -6,6 +6,13 @@
 	width: 100px;
 }
 
+.emptyTarget {
+	border: 1px dashed green;
+	padding: 30px;
+	width: 100px;
+	margin-bottom: 15px;
+}
+
 .index-list {
 	display: inline-block;
 	border: 1px blue solid;
@@ -26,6 +33,7 @@
 	vertical-align: top;
 }
 
-#sourceList .ui-sortable-placeholder {
+#sourceList .ui-sortable-placeholder, #targetList.static .ui-sortable-placeholder {
+	/* Prevent dragging causing an empty gap on the target drop area */
 	display: none;
 }

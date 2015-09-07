@@ -7,17 +7,25 @@ import React from 'react';
 import ListOfComponents from './components/ListOfComponents.jsx';
 
 class MainApp extends React.Component {
-    constructor(props) {
+  constructor(props) {
     	super(props);
     	// In ES6 class syntax, React no longer automagically binds your
     	// methods to the component object, so DIY (if they're likely to
     	// used as callbacks only?)
-		var tempSourceItems = props.sourceItems.map((item, index) => {
-			return {title: item, key: shortid.generate()};
-		});
-    var tempTargetItems = props.targetItems.map((item, index) => {
-      return {title: item, key: shortid.generate()};
-    });
+    var tempSourceItems = [];
+    var tempTargetItems = [];
+    try {
+  		tempSourceItems = props.sourceItems.map((item, index) => {
+  			return {title: item, key: shortid.generate()};
+  		});
+    }
+    catch(e){}
+    try {
+      tempTargetItems = props.targetItems.map((item, index) => {
+        return {title: item, key: shortid.generate()};
+      });
+    }
+    catch(e){}
 		this.state = {sourceItems: tempSourceItems, targetItems: tempTargetItems};
     this.onSourceListItemDragStart = this.onSourceListItemDragStart.bind(this);
     this.onTargetListItemDragStart = this.onTargetListItemDragStart.bind(this);
