@@ -22,12 +22,12 @@ if (TARGET === 'build') {
             vendor: ["react", "react-router", "jquery", "jquery-ui"]
         },
         plugins: [
-            // new webpack.optimize.CommonsChunkPlugin("vendor", BUILDJSPATH),
-            // new webpack.optimize.UglifyJsPlugin({
-            //     compress: {
-            //         warnings: false
-            //     }
-            // }),
+            new webpack.optimize.CommonsChunkPlugin("vendor", BUILDJSPATH),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                }
+            }),
             new webpack.ProvidePlugin({
                 $: "jquery",
                 jQuery: "jquery",
@@ -36,7 +36,7 @@ if (TARGET === 'build') {
             })
 
         ],
-        devtool: 'eval-source-map',
+        devtool: 'source-map',
         module: {
             // Note: don't include the same loader in multiple places, e.g putting babel under "common" and here.
             // Webpack will error out if you try this.
