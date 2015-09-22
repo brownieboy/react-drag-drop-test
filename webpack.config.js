@@ -82,6 +82,7 @@ if (TARGET === 'start' || !TARGET) {
         module: {
             // Note: don't include the same loader in multiple places, e.g putting babel under "common" and here.
             // Webpack will error out if you try this.
+            // Hot loading now done by react-transform.  See .babelrc file for details.
             loaders: [{
                 test: /\.jsx?$/,
                 loaders: ['babel'],
