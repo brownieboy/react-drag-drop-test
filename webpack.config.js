@@ -84,7 +84,7 @@ if (TARGET === 'start' || !TARGET) {
             // Webpack will error out if you try this.
             loaders: [{
                 test: /\.jsx?$/,
-                loaders: ['react-hot', 'babel'],
+                loaders: ['babel'],
                 include: path.resolve(ROOT_PATH, 'app')
             }]
         }
