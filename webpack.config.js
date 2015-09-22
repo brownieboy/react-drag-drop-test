@@ -23,6 +23,11 @@ if (TARGET === 'build') {
         },
         plugins: [
             new webpack.optimize.CommonsChunkPlugin("vendor", BUILDJSPATH),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'BABEL_ENV': JSON.stringify('production')
+                }
+            }),
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
                     warnings: false
