@@ -19,10 +19,11 @@ if (TARGET === 'build') {
     module.exports = merge(common, {
         entry: {
             app: path.resolve(ROOT_PATH, 'app/app.jsx'),
-            vendor: ["react", "react-router", "jquery", "jquery-ui"]
+            vendor: ["react", "jquery", "jquery-ui"]
         },
         plugins: [
             new webpack.optimize.CommonsChunkPlugin("vendor", BUILDJSPATH),
+//            new webpack.optimize.DedupePlugin(),  // Doesn't seem to do anything!
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
                     warnings: false
